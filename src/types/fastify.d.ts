@@ -4,7 +4,7 @@ import {
 	FastifyRequest,
 } from 'fastify';
 
-import { EnvironmentVariables } from '../server/constants/fastify-env-options';
+import type { EnvironmentVariables } from '../server/constants/fastify-env-options';
 
 declare module 'fastify' {
 	interface FastifyInstance {

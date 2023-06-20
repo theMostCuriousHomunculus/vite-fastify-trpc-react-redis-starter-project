@@ -2,9 +2,13 @@ import fastify from 'fastify';
 import fastifyCors from '@fastify/cors';
 import fastifyEnv from '@fastify/env';
 import fastifyRedis from '@fastify/redis';
+import { fastifyTRPCPlugin } from '@trpc/server/adapters/fastify';
 import fastifyVite from '@fastify/vite';
 import { join } from 'path';
+import socketioServer from 'fastify-socket.io';
 
+import { appRouter } from './router/index.js';
+import { createContext } from './constants/context.js';
 import fastifyEnvOptions from './constants/fastify-env-options.js';
 
 const server = fastify({
@@ -57,6 +61,19 @@ await server.register(
 	},
 );
 
+await server.register(socketioServer);
+
+await server.register(
+	fastifyTRPCPlugin,
+	{
+		prefix: '/trpc',
+		trpcOptions: {
+			createContext: createContext.bind(server),
+			router: appRouter,
+		},
+	},
+);
+
 await server.register(
 	fastifyVite,
 	{
@@ -75,7 +92,7 @@ if (process.argv.includes('--dev')) {
 	server.addHook(
 		'onRequest',
 		async (request, _reply) => {
-			if (request.method === 'POST' && request.url === '/trpc') {
+			if (request.url.startsWith('/trpc')) {
 				request.requestReceived = process.hrtime.bigint();
 			}
 		},
@@ -84,10 +101,7 @@ if (process.argv.includes('--dev')) {
 	server.addHook(
 		'onResponse',
 		(request, _reply) => {
-			if (
-				request.method === 'POST'
-				&& request.url === '/trpc'
-			) {
+			if (request.url.startsWith('/trpc')) {
 				if (request.requestReceived) {
 					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 					// @ts-ignore
