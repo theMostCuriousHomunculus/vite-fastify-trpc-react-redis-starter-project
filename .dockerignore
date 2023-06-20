@@ -1,0 +1,11 @@
+docker-compose.*.yml
+.eslintrc.json
+.eslintignore
+.github/
+.gitignore
+.nvmrc
+.vscode/
+README.md
+nginx.development.conf
+node_modules/
+requests.rest

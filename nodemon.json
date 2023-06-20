@@ -1,0 +1,9 @@
+{
+	"execMap": {
+		"ts": "node --loader ts-node/esm"
+	},
+	"ignore": ["node_modules"],
+	"stdout": true,
+	"verbose": true,
+	"watch": ["src"]
+}
