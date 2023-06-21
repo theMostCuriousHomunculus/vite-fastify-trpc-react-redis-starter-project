@@ -24,7 +24,8 @@
   },
   "files": [
     "src/types/fastify-vite.d.ts",
-    "src/types/fastify.d.ts"
+    "src/types/fastify.d.ts",
+    "src/types/vite-env.d.ts"
   ],
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }],

@@ -103,10 +103,7 @@ if (process.argv.includes('--dev')) {
 		(request, _reply) => {
 			if (request.url.startsWith('/trpc')) {
 				if (request.requestReceived) {
-					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-					// @ts-ignore
-					const { body: { operationName } } = request;
-					server.log.info(`${operationName} resolved in ${Math.round(Number(process.hrtime.bigint() - request.requestReceived) / 1e6)} ms`);
+					server.log.info(`${request.url} resolved in ${Math.round(Number(process.hrtime.bigint() - request.requestReceived) / 1e6)} ms`);
 				}
 			}
 		},

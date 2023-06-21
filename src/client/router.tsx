@@ -1,4 +1,7 @@
-import { FC } from 'react';
+import {
+	FC,
+	useState,
+} from 'react';
 
 import {
 	Outlet,
@@ -10,22 +13,32 @@ import {
 	QueryClient,
 	QueryClientProvider,
 } from '@tanstack/react-query';
+import { httpBatchLink } from '@trpc/client';
 
-import Home from './pages/Home.jsx';
-import Navigation from './components/Navigation.jsx';
-import { PreferencesProvider } from './contexts/preferences.jsx';
+import Home from './pages/Home';
+import Navigation from './components/Navigation';
+import { PreferencesProvider } from './contexts/preferences';
+import { trpc } from './utils/trpc';
 
-const queryClient = new QueryClient();
-
-const Root: FC = () => (
-	<QueryClientProvider client={queryClient}>
-		<PreferencesProvider>
-			<Navigation>
-				<Outlet />
-			</Navigation>
-		</PreferencesProvider>
-	</QueryClientProvider>
-);
+const Root: FC = () => {
+	const [queryClient] = useState(() => new QueryClient());
+	const [trpcClient] = useState(() => trpc.createClient({ links: [httpBatchLink({ url: import.meta.env.VITE_TRPC_ENDPOINT })] }));
+	
+	return (
+		<trpc.Provider
+			client={trpcClient}
+			queryClient={queryClient}
+		>
+			<QueryClientProvider client={queryClient}>
+				<PreferencesProvider>
+					<Navigation>
+						<Outlet />
+					</Navigation>
+				</PreferencesProvider>
+			</QueryClientProvider>
+		</trpc.Provider>
+	);
+};
 
 const rootRoute = new RootRoute({ component: Root });
 

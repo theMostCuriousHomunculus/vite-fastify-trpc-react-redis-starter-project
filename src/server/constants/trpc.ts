@@ -2,9 +2,16 @@ import { initTRPC } from '@trpc/server';
 
 import { Context } from './context.js';
 
-export const {
+const {
 	mergeRouters,
 	middleware,
-	procedure,
+	procedure: publicProcedure,
 	router,
 } = initTRPC.context<Context>().create();
+
+export {
+	mergeRouters,
+	middleware,
+	publicProcedure,
+	router,
+};

@@ -5,13 +5,14 @@ services:
       context: .
       dockerfile: Dockerfile
       target: development
-    command: sh -c "node --loader pnpm run dev"
+    command: sh -c "pnpm run dev"
     container_name: app-development
     depends_on:
       [nginx, redis]
     environment:
       APP_NAME: ${APP_NAME:-starter-app}
       APP_PORT: ${APP_PORT:-7270}
+      VITE_TRPC_ENDPOINT: http://localhost:${APP_PORT:-7270}/trpc
     ports:
       - "${APP_PORT:-7270}:${APP_PORT:-7270}"
       # used by vite for hot module replacement

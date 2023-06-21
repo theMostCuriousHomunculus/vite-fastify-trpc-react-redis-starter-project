@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 
-import { createApp } from './base.tsx';
+import { createApp } from './base';
 
 const rootElement = document.querySelector('main');
 

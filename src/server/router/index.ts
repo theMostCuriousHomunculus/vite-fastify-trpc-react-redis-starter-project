@@ -1,39 +1,41 @@
-// import { z } from 'zod';
+import { z } from 'zod';
 
 import {
-	// procedure,
+	publicProcedure,
 	router,
 } from '../constants/trpc.js';
 
 export const appRouter = router({
-	// postLocation: procedure
-	// 	.input(
-	// 		z.object({
-	// 			latitude: z.number(),
-	// 			longitude: z.number(),
-	// 		}),
-	// 	)
-	// 	.mutation(
-	// 		({
-	// 			ctx: {
-	// 				app: {
-	// 					io,
-	// 					redis,
-	// 				},
-	// 			},
-	// 			input: {
-	// 				latitude,
-	// 				longitude,
-	// 			},
-	// 		}) => {
-	// 			redis.geoadd(...);
-	// 			io.to(...)
-	// 			console.log(
-	// 				latitude,
-	// 				longitude,
-	// 			);
-	// 		},
-	// 	),
+	postLocation: publicProcedure
+		.input(
+			z.object({
+				latitude: z.number(),
+				longitude: z.number(),
+			}),
+		)
+		.mutation(
+			({
+				ctx: {
+					app: {
+						io,
+						log,
+						redis,
+					},
+					res,
+				},
+				input: {
+					latitude,
+					longitude,
+				},
+			}) => {
+				// redis.geoadd(...);
+				// io.to(...);
+				log.info(`Lat: ${latitude}, Lon: ${longitude}`);
+				res.status(200);
+				// res.send();
+				return null;
+			},
+		),
 });
 
-export type AppRouter = typeof router;
+export type AppRouter = typeof appRouter;

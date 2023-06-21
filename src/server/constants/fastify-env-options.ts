@@ -28,7 +28,7 @@ const fastifyEnvOptions: Omit<
 	schema: {
 		properties: {
 			APP_NAME: {
-				default: 'clm',
+				default: 'starter-app',
 				type: 'string',
 			},
 			APP_PORT: {
