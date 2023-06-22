@@ -13,6 +13,7 @@ services:
       APP_NAME: ${APP_NAME:-starter-app}
       APP_PORT: ${APP_PORT:-7270}
       VITE_TRPC_ENDPOINT: http://localhost:${APP_PORT:-7270}/trpc
+      VITE_GOOGLE_MAPS_API_KEY: ${VITE_GOOGLE_MAPS_API_KEY}
     ports:
       - "${APP_PORT:-7270}:${APP_PORT:-7270}"
       # used by vite for hot module replacement

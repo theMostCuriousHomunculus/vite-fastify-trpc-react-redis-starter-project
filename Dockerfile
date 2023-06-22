@@ -14,12 +14,10 @@ COPY pnpm-lock.yaml .
 FROM base as development
 RUN pnpm install
 COPY . .
-EXPOSE 7270
 
 # FROM base as production
 # COPY ./pnpm-lock.yaml .
 # RUN pnpm install --frozen-lockfile --prod;
 # COPY /dist .
 # COPY .env.production .
-# EXPOSE 3333
 # CMD ["pnpm", "run", "start"]
