@@ -9,6 +9,7 @@ import {
 	Box,
 	Toolbar,
 	Typography,
+	useMediaQuery,
 	useTheme,
 } from '@mui/material';
 
@@ -17,31 +18,28 @@ import NavigationButtonSet from './NavigationButtonSet';
 
 const Navigation: FC<PropsWithChildren> = ({ children }) => {
 	const {
+		breakpoints,
 		palette: {
 			primary,
 			secondary,
 		},
 	} = useTheme();
+	const desktop = useMediaQuery(breakpoints.up('md'));
 
 	return (
 		<Box
 			sx={{
 				display: 'flex',
 				flexDirection: 'column',
-				height: '100vh',
+				height: 'calc(100vh - env(safe-area-inset-bottom))',
+				// height: '100vh',
 			}}
 		>
 			<AppBar
 				position="sticky"
 				sx={{
 					background: `linear-gradient(to right, ${primary.main}, calc(2/3 * 100%), ${secondary.main})`,
-					display: {
-						lg: 'flex',
-						md: 'none',
-						sm: 'none',
-						xl: 'flex',
-						xs: 'none',
-					},
+					display: 'flex',
 					top: 0,
 				}}
 			>
@@ -49,41 +47,25 @@ const Navigation: FC<PropsWithChildren> = ({ children }) => {
 					<Typography
 						component="div"
 						sx={{
-							display: {
-								md: 'block',
-								sm: 'none',
-							},
 							flexGrow: 1,
+							visibility: {
+								lg: 'visible',
+								md: 'visible',
+								sm: 'hidden',
+								xl: 'visible',
+								xs: 'hidden',
+							},
 						}}
-						variant="h3"
+						variant="h2"
 					>
-						Cube Level Midnight
+						{desktop
+							? 'Starter App'
+							: ''}
 					</Typography>
 					<NavigationButtonSet />
 				</Toolbar>
 			</AppBar>
 			{children}
-			<AppBar
-				position="sticky"
-				sx={{
-					bottom: 0,
-					display: {
-						lg: 'none',
-						md: 'flex',
-					},
-				}}
-			>
-				<Toolbar
-					component="nav"
-					sx={{
-						background: `linear-gradient(to right, ${primary.main}, calc(2/3 * 100%), ${secondary.main})`,
-						display: 'flex',
-						justifyContent: 'space-around',
-					}}
-				>
-					<NavigationButtonSet />
-				</Toolbar>
-			</AppBar>
 		</Box>
 	);
 };

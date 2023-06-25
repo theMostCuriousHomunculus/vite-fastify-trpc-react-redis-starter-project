@@ -1,3 +1,7 @@
+import {
+	Configuration,
+	OpenAIApi,
+} from 'openai';
 import fastify from 'fastify';
 import fastifyCors from '@fastify/cors';
 import fastifyEnv from '@fastify/env';
@@ -62,6 +66,11 @@ await server.register(
 );
 
 await server.register(socketioServer);
+
+server.decorate(
+	'openai',
+	new OpenAIApi(new Configuration({ apiKey: server.config.OPENAI_API_KEY })),
+);
 
 await server.register(
 	fastifyTRPCPlugin,

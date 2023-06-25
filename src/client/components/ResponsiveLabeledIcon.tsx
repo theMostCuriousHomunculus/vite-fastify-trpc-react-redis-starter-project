@@ -12,6 +12,7 @@ import {
 import {
 	Link,
 	LinkOptions,
+	LinkPropsOptions,
 } from '@tanstack/router';
 import { SvgIconComponent } from '@mui/icons-material';
 
@@ -26,7 +27,7 @@ interface ResponsiveLabeledIconButtonProps extends ResponsiveLabeledIconProps {
 }
 
 interface ResponsiveLabeledIconLinkProps extends ResponsiveLabeledIconProps {
-	to: string;
+	to: LinkPropsOptions['to'];
 }
 
 const ResponsiveLabeledIconButton: FC<ResponsiveLabeledIconButtonProps> = ({
@@ -38,9 +39,10 @@ const ResponsiveLabeledIconButton: FC<ResponsiveLabeledIconButtonProps> = ({
 	<IconButton
 		color={color}
 		onClick={onClick}
+		size="large"
 	>
 		<Tooltip title={title}>
-			<Icon />
+			<Icon fontSize="large" />
 		</Tooltip>
 	</IconButton>
 );
@@ -54,10 +56,11 @@ const ResponsiveLabeledIconLink: FC<ResponsiveLabeledIconLinkProps> = ({
 	<IconButton
 		color={color}
 		component={Link as ForwardRefExoticComponent<LinkOptions>}
+		size="large"
 		to={to}
 	>
 		<Tooltip title={title}>
-			<Icon />
+			<Icon fontSize="large" />
 		</Tooltip>
 	</IconButton>
 );

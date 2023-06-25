@@ -12,6 +12,7 @@ services:
     environment:
       APP_NAME: ${APP_NAME:-starter-app}
       APP_PORT: ${APP_PORT:-7270}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
       VITE_TRPC_ENDPOINT: http://localhost:${APP_PORT:-7270}/trpc
       VITE_GOOGLE_MAPS_API_KEY: ${VITE_GOOGLE_MAPS_API_KEY}
     ports:

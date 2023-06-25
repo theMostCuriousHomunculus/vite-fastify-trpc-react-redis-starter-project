@@ -15,7 +15,9 @@ import {
 } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
 
+import Guide from './pages/Guide';
 import Home from './pages/Home';
+import Map from './pages/Map';
 import Navigation from './components/Navigation';
 import { PreferencesProvider } from './contexts/preferences';
 import { trpc } from './utils/trpc';
@@ -42,13 +44,29 @@ const Root: FC = () => {
 
 const rootRoute = new RootRoute({ component: Root });
 
-const indexRoute = new Route({
+const homeRoute = new Route({
 	component: Home,
 	getParentRoute: () => rootRoute,
 	path: '/',
 });
 
-const routeTree = rootRoute.addChildren([indexRoute]);
+const mapRoute = new Route({
+	component: Map,
+	getParentRoute: () => rootRoute,
+	path: '/map',
+});
+
+const guideRoute = new Route({
+	component: Guide,
+	getParentRoute: () => rootRoute,
+	path: '/guide',
+});
+
+const routeTree = rootRoute.addChildren([
+	guideRoute,
+	homeRoute,
+	mapRoute,
+]);
 
 const router = new Router({
 	defaultPreload: 'intent',
